@@ -124,7 +124,8 @@ export default class DailyNoteCollectorPlugin extends Plugin {
 						return content;
 					}
 
-					const linkLine = "\n" + `- ${link}`;
+					const blankLine = this.settings.insertBlankLine ? "\n" : "";
+        			const linkLine = `${blankLine}- ${link}`;
 					const insertAfter = this.settings.insertAfterHeading?.trim();
 
 					// If insert after text is specified, try to insert there
@@ -139,7 +140,7 @@ export default class DailyNoteCollectorPlugin extends Plugin {
 
 							// Insert right after the matched line
 							if (after.startsWith("\n")) {
-								return before + "\n" + linkLine + after;
+								return before + "\n" + linkLine + after.substring(blankLine ? 1 : 0);
 							} else {
 								return before + "\n" + linkLine + after;
 							}
