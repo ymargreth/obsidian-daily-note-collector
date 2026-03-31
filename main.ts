@@ -139,7 +139,7 @@ export default class DailyNoteCollectorPlugin extends Plugin {
 							const after = content.substring(matchEnd);
 
 							// Insert right after the matched line
-							if (after.startsWith("\n")) {
+							if (after.startsWith("\n- ")) {
 								return before + "\n" + linkLine + after.substring(blankLine ? 1 : 0);
 							} else {
 								return before + "\n" + linkLine + after;
