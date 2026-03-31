@@ -124,7 +124,7 @@ export default class DailyNoteCollectorPlugin extends Plugin {
 						return content;
 					}
 
-					const linkLine = `- ${link}`;
+					const linkLine = "\n" + `- ${link}`;
 					const insertAfter = this.settings.insertAfterHeading?.trim();
 
 					// If insert after text is specified, try to insert there
