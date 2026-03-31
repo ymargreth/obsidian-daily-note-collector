@@ -221,6 +221,20 @@ export class DailyNoteCollectorSettingTab extends PluginSettingTab {
 					})
 			);
 
+		new Setting(containerEl)
+			.setName("Insert Blank Line")
+			.setDesc(
+      			"When enabled, a blank line will be inserted between the existing content and the new links."
+    		)
+			.addToggle((toggle) => 
+				toggle
+					.setValue(settings.insertBlankLine ?? false)
+					.onChange(async (value) => {
+						settings.insertBlankLine = value;
+						await this.plugin.saveSettings();
+					})
+			);
+        
 		containerEl.createEl("h3", { text: "Exclusions" });
 
 		new Setting(containerEl)
