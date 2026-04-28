@@ -214,9 +214,9 @@ export class DailyNoteCollectorSettingTab extends PluginSettingTab {
 			.addText((text) =>
 				text
 					.setPlaceholder("e.g., ## Daily Notes")
-					.setValue(settings.insertAfterHeading ?? "")
+					.setValue(settings.insertAfterText ?? "")
 					.onChange(async (value) => {
-						settings.insertAfterHeading = value;
+						settings.insertAfterText = value;
 						await this.plugin.saveSettings();
 					})
 			);

@@ -8,7 +8,7 @@ export interface DailyNoteCollectorPluginSettings {
 	collectOther: boolean;
 	useEmbeddedLinks: boolean;
 	excludePattern: string;
-	insertAfterHeading: string;
+	insertAfterText: string;
 }
 
 export const DEFAULT_SETTINGS: DailyNoteCollectorPluginSettings = {
@@ -21,5 +21,5 @@ export const DEFAULT_SETTINGS: DailyNoteCollectorPluginSettings = {
 	collectOther: true,
 	useEmbeddedLinks: false,
 	excludePattern: "",
-	insertAfterHeading: "",
+	insertAfterText: "",
 };
