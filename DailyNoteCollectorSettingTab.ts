@@ -224,7 +224,7 @@ export class DailyNoteCollectorSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Insert Blank Line")
 			.setDesc(
-      			"When enabled, a blank line will be inserted between the existing content and the new links."
+      			"When enabled, a blank line will be inserted between the After Text and the new link."
     		)
 			.addToggle((toggle) => 
 				toggle
