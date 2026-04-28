@@ -9,7 +9,7 @@ export interface DailyNoteCollectorPluginSettings {
 	useEmbeddedLinks: boolean;
 	excludePattern: string;
 	insertAfterHeading: string;
-	inserBlankLine: boolean;
+	insertBlankLine: boolean;
 }
 
 export const DEFAULT_SETTINGS: DailyNoteCollectorPluginSettings = {
