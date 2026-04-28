@@ -2,6 +2,7 @@ import { Notice, Plugin, TAbstractFile, TFile } from "obsidian";
 import {
 	createDailyNote,
 	getAllDailyNotes,
+	getDailyNoteSettings,
 	getDailyNote,
 } from "obsidian-daily-notes-interface";
 import {
@@ -53,6 +54,18 @@ export default class DailyNoteCollectorPlugin extends Plugin {
 		return false;
 	}
 
+	private isDailyNote(file: TFile): boolean {
+		const {dailyNoteSettings} = getDailyNoteSettings();
+		if (dailyNoteSettings.folder) {
+			return file.path.startsWith(dailyNoteSettings.folder);
+		}
+		if (dailyNoteSettings.format) {
+			const today = window.moment().format(dailyNoteSettings.format);
+			return file.nameWithoutExtension === today;
+		}
+		return false;
+	}
+
 	/**
 	 * Returns null if file should be collected, or a string describing why it was excluded.
 	 */
@@ -60,7 +73,12 @@ export default class DailyNoteCollectorPlugin extends Plugin {
 		const extension = file.extension.toLowerCase();
 		const { settings } = this;
 
-		// Check exclude pattern first
+		// Check if it's a daily note first - if so, exclude regardless of settings
+		if (this.isDailyNote(file)) {
+			return "Daily Note";
+		}
+		
+		// Check exclude pattern before file type checks
 		if (this.isExcludedByPattern(file)) {
 			return "Exclude Pattern";
 		}
@@ -68,6 +86,7 @@ export default class DailyNoteCollectorPlugin extends Plugin {
 		// Check if this is an Excalidraw markdown file (.excalidraw.md)
 		const isExcalidrawMd = file.name.toLowerCase().endsWith(".excalidraw.md");
 
+		// Check file types
 		if (extension === "md") {
 			if (isExcalidrawMd) {
 				return settings.collectExcalidraw ? null : "Excalidraw disabled";
@@ -115,10 +134,6 @@ export default class DailyNoteCollectorPlugin extends Plugin {
 			: Promise.resolve(dailyNote);
 		promise
 			.then((dailyNote) => {
-				if (file.path === dailyNote.path) {
-					return;
-				}
-
 				return this.app.vault.process(dailyNote, (content) => {
 					if (content.includes(link)) {
 						return content;
